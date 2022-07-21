@@ -126,22 +126,20 @@ namespace FormApp3
                     selected_y = y; //y.ToArray();                    
                 } else
                 {
+                    Console.WriteLine("-3) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     var selected_date = dates.ElementAt(selectedIdx);
+                    Console.WriteLine("-2) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     var indices = from dt in x
                                   where dt.Date == selected_date
                                   select x.IndexOf(dt);
-                    //var idxs = indices.Mi
+                    Console.WriteLine("-1) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     int min_idx = indices.Min();
                     Console.WriteLine("0) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     int cnt = indices.Max() - min_idx;
                     Console.WriteLine("1) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     var plot_x = x.GetRange(min_idx, cnt);
                     var plot_y = y.GetRange(min_idx, cnt);
-                    //IEnumerable<DateTime> plot_x = (from idx in indices
-                     //                              select x.ElementAt(idx)).ToList();
                     Console.WriteLine("2) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
-                    //IEnumerable<float> plot_y = (from idx in indices
-                     //                           select y.ElementAt(idx)).ToArray();
                     Console.WriteLine("3) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
 
                     selected_x = plot_x; // plot_x.ToList(); //x.ToArray();
