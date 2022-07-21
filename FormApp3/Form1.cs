@@ -129,21 +129,23 @@ namespace FormApp3
                     Console.WriteLine("-3) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     var selected_date = dates.ElementAt(selectedIdx);
                     Console.WriteLine("-2) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
-                    var indices = from dt in x
+                    var indices = (from dt in x
                                   where dt.Date == selected_date
-                                  select x.IndexOf(dt);
+                                  select x.IndexOf(dt)).AsQueryable();
+                    var dateTemps = x.Zip(y, (first, second) => (first, second));
+                    var dateTempsByDate = dateTemps.ToLookup(x => x.first.Date, x => x);
+                    var thisDayDateTemps = dateTempsByDate[selected_date];
                     Console.WriteLine("-1) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
-                    int min_idx = indices.Min();
-                    Console.WriteLine("0) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
-                    int cnt = indices.Max() - min_idx;
-                    Console.WriteLine("1) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
-                    var plot_x = x.GetRange(min_idx, cnt);
-                    var plot_y = y.GetRange(min_idx, cnt);
-                    Console.WriteLine("2) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
+
+                    var plot_x = from pair in thisDayDateTemps
+                                 select pair.first;
+                    var plot_y = from pair in thisDayDateTemps
+                                 select pair.second;
+                    
                     Console.WriteLine("3) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
 
-                    selected_x = plot_x; // plot_x.ToList(); //x.ToArray();
-                    selected_y = plot_y; // plot_y.ToList(); //y.ToArray();
+                    selected_x = plot_x.ToList(); //x.ToArray();
+                    selected_y = plot_y.ToList(); //y.ToArray();
                     Console.WriteLine("4) Took " + stopWatch.ElapsedMilliseconds.ToString() + " ms");
                     
                     
